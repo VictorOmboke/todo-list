@@ -9,7 +9,7 @@ body {
   margin: 0;
   padding: 0;
   display: grid;
-  grid-template-columns: minmax(250px, 0.5fr) 2fr;
+  grid-template-columns: minmax(250px, 0.3fr) 2fr;
   grid-template-rows: minmax(100px, 0.25fr) 2fr;
 }
 
@@ -18,7 +18,7 @@ body {
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  background-color: #6a994e;
+  background-color: #fb8500;
   padding-left: 20px;
 }
 
@@ -33,34 +33,47 @@ body {
   display: flex;
   flex-direction: column;
   gap: 5px;
-  align-items: flex-start;
+  align-items: center;
   padding: 20px 20px 0 20px;
-  background-color: #f2e8cf;
+  background-color: #023047;
+  color: #ffffff;
 }
 
 #menu {
+  margin: 25px 0;
   display: flex;
+  align-items: center;
   flex-direction: column;
-  align-items: flex-start;
-  gap: 5px;
+  gap: 15px;
 }
 
 .menuBtn {
-  font-size: 1.2rem;
+  font-size: 1.3rem;
   font-weight: 500;
+  background-color: #023047;
+  color: #ffffff;
+  padding: 10px 30px;
   border-style: none;
-  background-color: #f2e8cf;
-  padding: 10px 0;
-  transition: font-size 0.2s ease-in-out, font-weight 0.2s ease-in-out;
+  border-radius: 10px;
+  background-color: #fb8500;
+  outline: none;
+  transition: 0.2s all;
 }
 
-.menuBtn:hover {
-  font-size: 1.3rem;
-  font-weight: 600;
+.menuBtn:active {
+  transform: scale(0.96);
+}
+
+#projects {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 #projects h2 {
-  font-size: 30px;
+  font-size: 40px;
+  margin: 15px 0;
 }
 
 #project-display {
@@ -72,14 +85,26 @@ body {
 #create-btn {
   position: absolute;
   bottom: 30px;
+  left: 20px;
 }
 
-#create-btn button {
+.createBtn {
+  align-self: flex-start;
   font-size: 50px;
+  text-align: center;
   width: 60px;
   height: 60px;
   border-radius: 50%;
   border-style: none;
-  background-color: #6a994e;
+  background-color: #fb8500;
   color: #ffffff;
+  transition: 0.2s all;
+}
+
+.createBtn:active {
+  transform: scale(0.96);
+}
+
+#content {
+  grid-area: 2 / 2 / 3 / 3;
 }
