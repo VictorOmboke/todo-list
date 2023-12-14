@@ -10,7 +10,7 @@ body {
   padding: 0;
   display: grid;
   grid-template-columns: minmax(250px, 0.3fr) 2fr;
-  grid-template-rows: minmax(100px, 0.25fr) 2fr;
+  grid-template-rows: 60px 2fr;
 }
 
 #header {
@@ -23,9 +23,27 @@ body {
 }
 
 #header h1 {
-  font-size: 50px;
+  font-size: 40px;
   margin: 0;
   color: #ffffff;
+}
+
+.task-creator {
+  position: absolute;
+  right: 30px;
+  color: #fb8500;
+  background-color: #ffffff;
+  font-size: 30px;
+  border-radius: 50%;
+  border-style: none;
+  height: 40px;
+  width: 40px;
+  box-shadow: 7px 6px 28px 1px rgba(0, 0, 0, 0.24);
+  transition: 0.2s all;
+}
+.task-creator:active {
+  transform: scale(0.96);
+  box-shadow: 3px 2px 22px 1px rgba(0, 0, 0, 0.24);
 }
 
 #sideBar {
@@ -35,7 +53,7 @@ body {
   gap: 5px;
   align-items: center;
   padding: 20px 20px 0 20px;
-  background-color: #023047;
+  background-color: #52575a;
   color: #ffffff;
 }
 
@@ -47,21 +65,33 @@ body {
   gap: 15px;
 }
 
-.menuBtn {
-  width: 160px;
-  font-size: 1.2rem;
+.menuBtn,
+.createProjectBtn {
+  width: 150px;
+  font-size: 0.9rem;
   font-weight: 500;
   background-color: #023047;
   color: #ffffff;
   padding: 10px 30px;
   border-style: none;
-  border-radius: 10px;
+  border-radius: 20px;
   background-color: #fb8500;
   outline: none;
   transition: 0.2s all;
 }
 
 .menuBtn:active {
+  transform: scale(0.96);
+}
+
+.createProjectBtn {
+  margin-top: 10px;
+  padding: 10px 0;
+  color: #fb8500;
+  background-color: #ffffff;
+}
+
+.createProjectBtn:active {
   transform: scale(0.96);
 }
 
@@ -73,7 +103,7 @@ body {
 }
 
 #projects h2 {
-  font-size: 40px;
+  font-size: 30px;
   margin: 15px 0;
 }
 
@@ -81,29 +111,6 @@ body {
   display: flex;
   flex-direction: column;
   gap: 5px;
-}
-
-#create-btn {
-  position: absolute;
-  bottom: 30px;
-  left: 20px;
-}
-
-.createBtn {
-  align-self: flex-start;
-  font-size: 50px;
-  text-align: center;
-  width: 60px;
-  height: 60px;
-  border-radius: 50%;
-  border-style: none;
-  background-color: #fb8500;
-  color: #ffffff;
-  transition: 0.2s all;
-}
-
-.createBtn:active {
-  transform: scale(0.96);
 }
 
 #content {
