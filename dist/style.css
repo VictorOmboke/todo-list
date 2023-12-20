@@ -40,6 +40,7 @@ body {
   width: 40px;
   box-shadow: 7px 6px 28px 1px rgba(0, 0, 0, 0.24);
   transition: 0.2s all;
+  cursor: pointer;
 }
 .task-creator:active {
   transform: scale(0.96);
@@ -78,6 +79,7 @@ body {
   background-color: #fb8500;
   outline: none;
   transition: 0.2s all;
+  cursor: pointer;
 }
 
 .menuBtn:active {
@@ -89,6 +91,7 @@ body {
   padding: 10px 0;
   color: #fb8500;
   background-color: #ffffff;
+  cursor: pointer;
 }
 
 .createProjectBtn:active {
@@ -118,9 +121,9 @@ body {
 }
 
 #task-creator {
-  min-width: 200px;
-  display: grid;
-  grid-template-columns: minmax(300px, 1fr);
+  width: clamp(220px, 40%, 500px);
+  display: flex;
+  flex-direction: column;
   gap: 10px;
   border: 1px solid #d8d8d8;
   border-radius: 15px;
@@ -131,9 +134,9 @@ body {
   background-color: #ffffff;
 }
 
-#task-creator {
+/* #task-creator {
   display: none;
-}
+} */
 
 #task-creator .header {
   display: flex;
@@ -158,6 +161,7 @@ body {
   text-align: center;
   font-weight: bold;
   transition: 0.2s all;
+  cursor: pointer;
 }
 
 .close:active {
@@ -165,8 +169,8 @@ body {
 }
 
 #task-form {
-  display: grid;
-  grid-template-rows: repeat(auto-fill, 1fr);
+  display: flex;
+  flex-direction: column;
   gap: 10px;
   padding: 0 10px;
 }
@@ -192,7 +196,6 @@ body {
 }
 
 #task-form .project {
-  align-self: end;
   display: flex;
   flex-direction: column;
 }
@@ -225,6 +228,10 @@ body {
   margin-bottom: 5px;
 }
 
+#task-form .add-task {
+  align-self: flex-end;
+}
+
 .add-task,
 .add-project {
   font-size: 15px;
@@ -235,6 +242,7 @@ body {
   padding: 10px 20px;
   transition: 0.2s all;
   margin-bottom: 10px;
+  cursor: pointer;
 }
 
 .add-task:active {
