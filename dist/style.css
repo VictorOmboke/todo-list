@@ -24,7 +24,7 @@ body {
 
 #header h1 {
   font-size: 40px;
-  margin: 0;
+  margin: 0 0 0 30px;
   color: #ffffff;
 }
 
@@ -74,7 +74,7 @@ body {
   color: #ffffff;
   padding: 10px 30px;
   border-style: none;
-  border-radius: 20px;
+  border-radius: 6px;
   background-color: #fb8500;
   outline: none;
   transition: 0.2s all;
@@ -115,4 +115,127 @@ body {
 
 #content {
   grid-area: 2 / 2 / 3 / 3;
+}
+
+#task-creator {
+  min-width: 200px;
+  display: grid;
+  grid-template-columns: minmax(300px, 1fr);
+  gap: 10px;
+  border: 1px solid #d8d8d8;
+  border-radius: 15px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #ffffff;
+}
+
+#task-creator {
+  display: none;
+}
+
+#task-creator .header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 10px;
+  grid-row: 1 / 2;
+  border-bottom: 1px solid #d8d8d8;
+}
+
+.header h2 {
+  margin: 5px 0;
+}
+
+.header .close {
+  height: 24px;
+  width: 24px;
+  border-radius: 50%;
+  border-style: none;
+  background-color: #ffffff;
+  color: #000000;
+  text-align: center;
+  font-weight: bold;
+  transition: 0.2s all;
+}
+
+.close:active {
+  transform: scale(0.92);
+}
+
+#task-form {
+  display: grid;
+  grid-template-rows: repeat(auto-fill, 1fr);
+  gap: 10px;
+  padding: 0 10px;
+}
+
+#task-form .title {
+  display: flex;
+  flex-direction: column;
+}
+
+#task-form .note {
+  display: flex;
+  flex-direction: column;
+}
+
+#task-form .date {
+  display: flex;
+  flex-direction: column;
+}
+
+#task-form .priority {
+  display: flex;
+  flex-direction: column;
+}
+
+#task-form .project {
+  align-self: end;
+  display: flex;
+  flex-direction: column;
+}
+
+#task-form .button {
+  justify-self: end;
+  align-self: center;
+}
+
+#task-form input {
+  border: 1px solid #d8d8d8;
+  border-radius: 6px;
+  padding: 10px;
+}
+
+#task-form textarea {
+  font-family: "Roboto", sans-serif;
+  border: 1px solid #d8d8d8;
+  border-radius: 6px;
+  padding: 10px;
+  resize: none;
+}
+
+#task-form select {
+  border: 1px solid #d8d8d8;
+  border-radius: 6px;
+  padding: 10px;
+}
+#task-form label {
+  margin-bottom: 5px;
+}
+
+.add-task {
+  font-size: 15px;
+  background-color: #fb8500;
+  color: #ffffff;
+  border-style: none;
+  border-radius: 6px;
+  padding: 10px 20px;
+  transition: 0.2s all;
+  margin-bottom: 10px;
+}
+
+.add-task:active {
+  transform: scale(0.96);
 }
