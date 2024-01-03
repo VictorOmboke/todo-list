@@ -12,10 +12,11 @@
     />
     <title>2-Do</title>
   </head>
+
   <body>
     <div id="header">
       <h1>2/DO</h1>
-      <button class="task-creator">&#43;</button>
+      <button class="taskLauncher">&#43;</button>
     </div>
 
     <div id="sideBar">
@@ -28,23 +29,22 @@
       <div id="projects">
         <h2>Projects</h2>
 
-        <div id="project-display">Random Project</div>
+        <div id="projectDisplay">Random Project</div>
         <button class="createProjectBtn">&#43; New Project</button>
       </div>
     </div>
 
     <div id="content"></div>
 
-    <div id="task-creator">
+    <div id="taskCreator">
       <div class="header">
         <h2>Create a task</h2>
-        <button class="close">&#10005;</button>
+        <button class="taskClose">&#10005;</button>
       </div>
-
       <form
         action="https://example.com/placeholder"
         method="post"
-        id="task-form"
+        id="taskForm"
       >
         <div class="title">
           <label for="title">Title: </label>
@@ -81,13 +81,13 @@
       </form>
     </div>
 
-    <div id="project-creator">
+    <div id="projectCreator">
       <div class="header">
         <h2>Create a project</h2>
-        <button class="close">&#10005;</button>
+        <button class="projectClose">&#10005;</button>
       </div>
 
-      <form action="" method="post" id="project-form">
+      <form action="" method="post" id="projectForm">
         <div class="name">
           <label for="name">Name:</label>
           <input type="text" id="name" name="name" required />
