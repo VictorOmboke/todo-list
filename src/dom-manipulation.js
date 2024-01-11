@@ -1,3 +1,5 @@
+import handleTodoLogic from "./todo-logic.js";
+
 function handleDomManipulation() {
   function launchTaskCreator() {
     const taskLauncher = document.querySelector(".taskLauncher");
