@@ -239,12 +239,12 @@ body {
   margin-bottom: 5px;
 }
 
-#taskForm .add-task {
+#taskForm .addTask {
   align-self: flex-end;
 }
 
-.add-task,
-.add-project {
+.addTask,
+.addProject {
   font-size: 15px;
   background-color: #fb8500;
   color: #ffffff;
@@ -256,7 +256,7 @@ body {
   cursor: pointer;
 }
 
-.add-task:active {
+.addTask:active {
   transform: scale(0.96);
 }
 
@@ -318,11 +318,11 @@ body {
   padding: 10px;
 }
 
-#projectForm .add-project {
+#projectForm .addProject {
   align-self: flex-end;
   margin-bottom: 10px;
 }
 
-.add-project:active {
+.addProject:active {
   transform: scale(0.96);
 }
