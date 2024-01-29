@@ -1,8 +1,11 @@
 function handleTodoLogic() {
-  function getProjectName() {
+  function createProject() {
     const projectForm = document.getElementById("projectForm");
+    const projectFormContainer = document.getElementById("projectCreator");
     const projectDisplay = document.getElementById("projectDisplay");
     const projectSelect = document.getElementById("project");
+    const taskLauncher = document.querySelector(".taskLauncher");
+
     let projectNames = [];
 
     projectForm.addEventListener("submit", (e) => {
@@ -27,11 +30,23 @@ function handleTodoLogic() {
       projectOption.text = newProject;
       projectSelect.add(projectOption);
 
-      projectNameInput.value = "";
+      projectForm.reset();
+      projectFormContainer.style.display = "none";
+      taskLauncher.style.pointerEvents = "auto";
     });
   }
 
-  return { getProjectName };
+  function taskFactory(title, note, date, priority, project) {
+    return {
+      title: title,
+      note: note,
+      date: date,
+      priority: priority,
+      project: project,
+    };
+  }
+
+  return { createProject, taskFactory };
 }
 
 export default handleTodoLogic;

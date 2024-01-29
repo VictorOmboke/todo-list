@@ -8,5 +8,6 @@ domManipulation.launchProjectCreator();
 domManipulation.launchTaskCreator();
 domManipulation.closeProjectCreator();
 domManipulation.closeTaskCreator();
+domManipulation.displayTask();
 
-todoLogic.getProjectName();
+todoLogic.createProject();
