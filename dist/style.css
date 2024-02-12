@@ -12,6 +12,7 @@ body {
   grid-template-columns: 250px 2fr;
   grid-template-rows: 60px 2fr;
   z-index: 999;
+  font-size: 0.9em;
 }
 
 #header {
@@ -127,11 +128,6 @@ body {
   display: flex;
   flex-direction: column;
   gap: 5px;
-}
-
-#content {
-  grid-area: 2 / 2 / 3 / 3;
-  background-color: #2f2f2f;
 }
 
 #taskCreator {
@@ -324,5 +320,78 @@ body {
 }
 
 .addProject:active {
+  transform: scale(0.96);
+}
+
+#content {
+  grid-area: 2 / 2 / 3 / 3;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 35px 50px;
+  background-color: #2f2f2f;
+}
+
+.taskCard {
+  width: 90%;
+  max-width: 900px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 15px;
+  background-color: #ffffff;
+  border-radius: 6px;
+}
+.taskCardDetailsContainer {
+  width: 90%;
+  max-width: 900px;
+  padding: 10px 15px;
+  background-color: #ffffff;
+  border-radius: 6px;
+  position: relative;
+}
+
+.taskCardDetails {
+  display: flex;
+  flex-direction: column;
+  background-color: #ffffff;
+  border-radius: 6px;
+  gap: 15px;
+}
+
+.taskLeft,
+.taskRight {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.taskDetailsLeft {
+  display: flex;
+  justify-content: space-between;
+  gap: 7px;
+}
+
+.taskDetailsRight {
+  display: flex;
+  justify-content: space-between;
+  gap: 25px;
+}
+
+.closeTaskDetailsBtn {
+  align-self: center;
+  width: 60px;
+  margin-top: 15px;
+  left: 50%;
+  padding: 5px 10px;
+  text-align: center;
+  background-color: #fb8500;
+  color: #ffffff;
+  border-radius: 6px;
+  border-style: none;
+}
+
+.closeTaskDetailsBtn:active {
   transform: scale(0.96);
 }
