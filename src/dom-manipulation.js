@@ -248,6 +248,26 @@ function handleDomManipulation() {
     });
   }
 
+  function deleteTask() {
+    const deleteIcons = document.querySelectorAll(".deleteIcon");
+
+    deleteIcons.forEach((deleteIcon) => {
+      deleteIcon.addEventListener("click", (event) => {
+        const display = document.getElementById("content");
+        const taskCard = event.target.closest(".taskCard");
+        const taskCardDetailsContainer =
+          event.target.closest(".taskCard").nextElementSibling;
+
+        if (taskCard && taskCardDetailsContainer) {
+          display.removeChild(taskCard);
+          display.removeChild(taskCardDetailsContainer);
+
+          console.log("This task was deleted");
+        }
+      });
+    });
+  }
+
   function displayTask() {
     const taskForm = document.getElementById("taskForm");
     const display = document.getElementById("content");
@@ -279,6 +299,7 @@ function handleDomManipulation() {
 
       openTaskDetails();
       closeTaskDetails();
+      deleteTask();
 
       taskFormContainer.style.display = "none";
       projectLauncher.style.pointerEvents = "auto";
