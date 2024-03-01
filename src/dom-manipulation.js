@@ -1,23 +1,34 @@
 import handleTodoLogic from "./todo-logic.js";
 
 function handleDomManipulation() {
-  function launchTaskCreator() {
-    const taskLauncher = document.querySelector(".taskLauncher");
-    const taskCreator = document.getElementById("taskCreator");
-    const projectCreatorBtn = document.querySelector(".createProjectBtn");
+  const tasks = [];
 
+  let taskCardCounter = 0;
+
+  const display = document.getElementById("content");
+
+  const taskCreator = document.getElementById("taskCreator");
+  const taskForm = document.getElementById("taskForm");
+  const projectCreator = document.getElementById("projectCreator");
+  const taskEditor = document.getElementById("taskEditor");
+  const editForm = document.getElementById("editForm");
+
+  const taskLauncher = document.querySelector(".taskLauncher");
+  const projectCreatorBtn = document.querySelector(".createProjectBtn");
+  const taskCreatorCloseBtn = document.querySelector(".taskClose");
+  const projectCreatorCloseBtn = document.querySelector(".projectClose");
+  const taskEditorCloseBtn = document.querySelector(".editClose");
+
+  function launchTaskCreator() {
     taskLauncher.addEventListener("click", (event) => {
       event.stopPropagation();
       taskCreator.style.display = "block";
       projectCreatorBtn.style.pointerEvents = "none";
+      taskForm.reset();
     });
   }
 
   function closeTaskCreator() {
-    const taskCreator = document.getElementById("taskCreator");
-    const taskCreatorCloseBtn = document.querySelector(".taskClose");
-    const projectCreatorBtn = document.querySelector(".createProjectBtn");
-
     taskCreatorCloseBtn.addEventListener("click", () => {
       taskCreator.style.display = "none";
       projectCreatorBtn.style.pointerEvents = "auto";
@@ -32,10 +43,6 @@ function handleDomManipulation() {
   }
 
   function launchProjectCreator() {
-    const projectCreator = document.getElementById("projectCreator");
-    const projectCreatorBtn = document.querySelector(".createProjectBtn");
-    const taskLauncher = document.querySelector(".taskLauncher");
-
     projectCreatorBtn.addEventListener("click", (event) => {
       event.stopPropagation();
       projectCreator.style.display = "block";
@@ -44,10 +51,6 @@ function handleDomManipulation() {
   }
 
   function closeProjectCreator() {
-    const projectCreator = document.getElementById("projectCreator");
-    const projectCreatorCloseBtn = document.querySelector(".projectClose");
-    const taskLauncher = document.querySelector(".taskLauncher");
-
     projectCreatorCloseBtn.addEventListener("click", () => {
       projectCreator.style.display = "none";
       taskLauncher.style.pointerEvents = "auto";
@@ -57,6 +60,46 @@ function handleDomManipulation() {
       if (!projectCreator.contains(event.target)) {
         projectCreator.style.display = "none";
         taskLauncher.style.pointerEvents = "auto";
+      }
+    });
+  }
+
+  function launchTaskEditor() {
+    const editIcons = document.querySelectorAll(".editIcon");
+
+    editIcons.forEach((editIcon) => {
+      editIcon.addEventListener("click", (event) => {
+        event.stopPropagation();
+
+        const taskCard = event.target.closest(".taskCard");
+        const taskId = taskCard.dataset.taskId;
+
+        populateEditForm(taskId);
+
+        taskCreator.style.display = "none";
+        projectCreator.style.display = "none";
+
+        taskEditor.style.display = "block";
+        console.log("Task editor has been opened");
+
+        taskLauncher.style.pointerEvents = "none";
+        projectCreatorBtn.style.pointerEvents = "none";
+      });
+    });
+  }
+
+  function closeTaskEditor() {
+    taskEditorCloseBtn.addEventListener("click", () => {
+      taskEditor.style.display = "none";
+      taskLauncher.style.pointerEvents = "auto";
+      projectCreatorBtn.style.pointerEvents = "auto";
+    });
+
+    window.addEventListener("click", (event) => {
+      if (!taskEditor.contains(event.target)) {
+        taskEditor.style.display = "none";
+        taskLauncher.style.pointerEvents = "auto";
+        projectCreatorBtn.style.pointerEvents = "auto";
       }
     });
   }
@@ -133,9 +176,13 @@ function handleDomManipulation() {
     return deleteIcon;
   }
 
-  function createTaskCard() {
+  function createTaskCard(newTask) {
+    taskCardCounter++;
+
     const taskCard = document.createElement("div");
     taskCard.classList.add("taskCard");
+    taskCard.dataset.taskId = newTask.id;
+    taskCard.setAttribute("data-cardCounter", `card ${taskCardCounter}`);
 
     const taskCheckbox = document.createElement("input");
     taskCheckbox.classList.add("taskCheckBox");
@@ -166,7 +213,7 @@ function handleDomManipulation() {
     return taskCard;
   }
 
-  function createTaskDetailsCard() {
+  function createTaskDetailsCard(newTask) {
     const title = document.getElementById("title").value;
     const note = document.getElementById("add_note").value;
     const date = document.getElementById("date").value;
@@ -175,6 +222,7 @@ function handleDomManipulation() {
 
     const taskCardDetailsContainer = document.createElement("div");
     taskCardDetailsContainer.classList.add("taskCardDetailsContainer");
+    taskCardDetailsContainer.dataset.taskId = newTask.id;
     taskCardDetailsContainer.style.display = "none";
 
     const closeTaskDetailsBtn = document.createElement("button");
@@ -184,36 +232,41 @@ function handleDomManipulation() {
     const taskCardDetails = document.createElement("div");
     taskCardDetails.classList.add("taskCardDetails");
 
-    const taskDetailsLeft = document.createElement("div");
-    taskDetailsLeft.classList.add("taskDetailsLeft");
+    const taskDetailsTop = document.createElement("div");
+    taskDetailsTop.classList.add("taskDetailsTop");
 
-    const taskDetailsRight = document.createElement("div");
-    taskDetailsRight.classList.add("taskDetailsRight");
+    const taskDetailsBottom = document.createElement("div");
+    taskDetailsBottom.classList.add("taskDetailsBottom");
 
     const titleDetails = document.createElement("div");
+    titleDetails.classList.add("titleDetails");
     titleDetails.textContent = `Title: ${title}`;
 
     const noteDetails = document.createElement("div");
+    noteDetails.classList.add("noteDetails");
     noteDetails.textContent = `Note: ${note}`;
 
     const dateDetails = document.createElement("div");
+    dateDetails.classList.add("dateDetails");
     dateDetails.textContent = `Date: ${date}`;
 
     const priorityDetails = document.createElement("div");
+    priorityDetails.classList.add("priorityDetails");
     priorityDetails.textContent = `Priority: ${priority}`;
 
     const projectDetails = document.createElement("div");
+    projectDetails.classList.add("projectDetails");
     projectDetails.textContent = `Project: ${project}`;
 
-    taskDetailsLeft.appendChild(titleDetails);
-    taskDetailsLeft.appendChild(dateDetails);
-    taskDetailsLeft.appendChild(priorityDetails);
+    taskDetailsTop.appendChild(titleDetails);
+    taskDetailsTop.appendChild(dateDetails);
+    taskDetailsTop.appendChild(priorityDetails);
 
-    taskDetailsRight.appendChild(noteDetails);
-    taskDetailsRight.appendChild(projectDetails);
+    taskDetailsBottom.appendChild(noteDetails);
+    taskDetailsBottom.appendChild(projectDetails);
 
-    taskCardDetails.appendChild(taskDetailsLeft);
-    taskCardDetails.appendChild(taskDetailsRight);
+    taskCardDetails.appendChild(taskDetailsTop);
+    taskCardDetails.appendChild(taskDetailsBottom);
     taskCardDetails.appendChild(closeTaskDetailsBtn);
 
     taskCardDetailsContainer.appendChild(taskCardDetails);
@@ -259,24 +312,123 @@ function handleDomManipulation() {
           event.target.closest(".taskCard").nextElementSibling;
 
         if (taskCard && taskCardDetailsContainer) {
+          const taskId = taskCard.dataset.taskId;
+          const taskIndex = tasks.findIndex(
+            (newTask) => newTask.id === parseInt(taskId)
+          );
+
+          if (taskIndex !== -1) {
+            tasks.splice(taskIndex, 1);
+          }
+
           display.removeChild(taskCard);
           display.removeChild(taskCardDetailsContainer);
 
+          console.log(tasks);
           console.log("This task was deleted");
         }
       });
     });
   }
 
-  function displayTask() {
-    const taskForm = document.getElementById("taskForm");
-    const display = document.getElementById("content");
-    const taskFormContainer = document.getElementById("taskCreator");
-    const projectLauncher = document.querySelector(".createProjectBtn");
+  function populateEditForm(taskId) {
+    const editTitle = document.getElementById("edit_title");
+    const editNote = document.getElementById("edit_note");
+    const editDate = document.getElementById("edit_date");
+    const editPriority = document.getElementById("edit_priority");
+    const editProject = document.getElementById("edit_project");
 
+    const taskToUpdate = tasks.find(
+      (newTask) => newTask.id === parseInt(taskId)
+    );
+
+    if (taskToUpdate) {
+      editTitle.value = `${taskToUpdate.title}`;
+      editNote.value = `${taskToUpdate.note}`;
+      editDate.value = `${taskToUpdate.date}`;
+      editPriority.value = `${taskToUpdate.priority}`;
+      editProject.value = `${taskToUpdate.project}`;
+    } else {
+      console.error("Task not found");
+    }
+  }
+
+  function updateTaskCard(taskId, newTaskData) {
+    const taskCard = document.querySelector(
+      `.taskCard[data-task-id="${taskId}"]`
+    );
+
+    if (taskCard) {
+      taskCard.querySelector(".taskTitle").textContent = newTaskData.title;
+      taskCard.querySelector(".taskDate").textContent = newTaskData.date;
+    }
+  }
+
+  function updateTaskDetailsCard(taskId, newTaskData) {
+    const taskCardDetailsContainer = document.querySelector(
+      `.taskCardDetailsContainer[data-task-id="${taskId}"]`
+    );
+
+    if (taskCardDetailsContainer) {
+      taskCardDetailsContainer.querySelector(
+        ".taskDetailsTop .titleDetails"
+      ).textContent = `Title: ${newTaskData.title}`;
+      taskCardDetailsContainer.querySelector(
+        ".taskDetailsTop .dateDetails"
+      ).textContent = `Date: ${newTaskData.date}`;
+      taskCardDetailsContainer.querySelector(
+        ".taskDetailsTop .priorityDetails"
+      ).textContent = `Priority: ${newTaskData.priority}`;
+      taskCardDetailsContainer.querySelector(
+        ".taskDetailsBottom .noteDetails"
+      ).textContent = `Note: ${newTaskData.note}`;
+      taskCardDetailsContainer.querySelector(
+        ".taskDetailsBottom .projectDetails"
+      ).textContent = `Project: ${newTaskData.project}`;
+    }
+  }
+
+  function editTask() {
+    const editTitle = document.getElementById("edit_title");
+    const editNote = document.getElementById("edit_note");
+    const editDate = document.getElementById("edit_date");
+    const editPriority = document.getElementById("edit_priority");
+    const editProject = document.getElementById("edit_project");
+
+    editForm.addEventListener("submit", (event) => {
+      event.preventDefault();
+
+      const taskCard = document.querySelector(
+        `[data-cardCounter="card ${taskCardCounter}"]`
+      );
+      const taskId = taskCard.dataset.taskId;
+      const taskToUpdate = tasks.find(
+        (newTask) => newTask.id === parseInt(taskId)
+      );
+
+      if (taskToUpdate) {
+        taskToUpdate.title = editTitle.value;
+        taskToUpdate.note = editNote.value;
+        taskToUpdate.date = editDate.value;
+        taskToUpdate.priority = editPriority.value;
+        taskToUpdate.project = editProject.value;
+
+        updateTaskCard(taskId, taskToUpdate);
+        updateTaskDetailsCard(taskId, taskToUpdate);
+
+        console.log(tasks);
+        taskEditor.style.display = "none";
+      } else {
+        console.error("Task not found");
+      }
+    });
+  }
+
+  function displayTask() {
     taskForm.addEventListener("submit", (event) => {
       event.preventDefault();
 
+      const id = tasks.length;
       const title = document.getElementById("title").value;
       const note = document.getElementById("add_note").value;
       const date = document.getElementById("date").value;
@@ -284,25 +436,31 @@ function handleDomManipulation() {
       const project = document.getElementById("project").value;
 
       let newTask = handleTodoLogic().taskFactory(
+        id,
         title,
         note,
         date,
         priority,
         project
       );
-      console.log(newTask);
 
-      display.appendChild(createTaskCard());
-      display.appendChild(createTaskDetailsCard());
+      tasks.push(newTask);
+      console.log(tasks);
 
-      taskForm.reset();
+      display.appendChild(createTaskCard(newTask));
+      display.appendChild(createTaskDetailsCard(newTask));
+
+      // taskForm.reset();
 
       openTaskDetails();
       closeTaskDetails();
       deleteTask();
+      launchTaskEditor();
+      closeTaskEditor();
+      editTask();
 
-      taskFormContainer.style.display = "none";
-      projectLauncher.style.pointerEvents = "auto";
+      taskCreator.style.display = "none";
+      projectCreatorBtn.style.pointerEvents = "auto";
     });
   }
 

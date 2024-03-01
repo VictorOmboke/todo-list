@@ -1,9 +1,11 @@
 function handleTodoLogic() {
   function createProject() {
     const projectForm = document.getElementById("projectForm");
+    const editForm = document.getElementById("editForm");
     const projectFormContainer = document.getElementById("projectCreator");
     const projectDisplay = document.getElementById("projectDisplay");
     const projectSelect = document.getElementById("project");
+    const editProjectSelect = document.getElementById("edit_project");
     const taskLauncher = document.querySelector(".taskLauncher");
 
     let projectNames = [];
@@ -30,14 +32,19 @@ function handleTodoLogic() {
       projectOption.text = newProject;
       projectSelect.add(projectOption);
 
+      const editProjectOption = document.createElement("option");
+      editProjectOption.text = newProject;
+      editProjectSelect.add(editProjectOption);
+
       projectForm.reset();
       projectFormContainer.style.display = "none";
       taskLauncher.style.pointerEvents = "auto";
     });
   }
 
-  function taskFactory(title, note, date, priority, project) {
+  function taskFactory(id, title, note, date, priority, project) {
     return {
+      id: id,
       title: title,
       note: note,
       date: date,

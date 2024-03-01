@@ -9,7 +9,5 @@ domManipulation.launchTaskCreator();
 domManipulation.closeProjectCreator();
 domManipulation.closeTaskCreator();
 domManipulation.displayTask();
-// // domManipulation.openTaskDetails();
-// domManipulation.closeTaskDetails();
 
 todoLogic.createProject();
