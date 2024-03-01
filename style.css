@@ -130,7 +130,8 @@ body {
   gap: 5px;
 }
 
-#taskCreator {
+#taskCreator,
+#taskEditor {
   width: clamp(220px, 40%, 500px);
   display: none;
   flex-direction: column;
@@ -144,7 +145,8 @@ body {
   background-color: #ffffff;
 }
 
-#taskCreator .header {
+#taskCreator .header,
+#taskEditor .header {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -157,7 +159,8 @@ body {
   margin: 5px 0;
 }
 
-.header .taskClose {
+#taskCreator .header .taskClose,
+#taskEditor .header .editClose {
   height: 24px;
   width: 24px;
   border-radius: 50%;
@@ -170,11 +173,13 @@ body {
   cursor: pointer;
 }
 
-.taskClose:active {
+.taskClose:active,
+.editClose:active {
   transform: scale(0.92);
 }
 
-#taskForm {
+#taskForm,
+#editForm {
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -182,27 +187,32 @@ body {
   padding-top: 10px;
 }
 
-#taskForm .title {
+#taskForm .title,
+#editForm .editTitle {
   display: flex;
   flex-direction: column;
 }
 
-#taskForm .note {
+#taskForm .note,
+#editForm .editNote {
   display: flex;
   flex-direction: column;
 }
 
-#taskForm .date {
+#taskForm .date,
+#editForm .editDate {
   display: flex;
   flex-direction: column;
 }
 
-#taskForm .priority {
+#taskForm .priority,
+#editForm .editPriority {
   display: flex;
   flex-direction: column;
 }
 
-#taskForm .project {
+#taskForm .project,
+#editForm .editProject {
   display: flex;
   flex-direction: column;
 }
@@ -212,13 +222,15 @@ body {
   align-self: center;
 }
 
-#taskForm input {
+#taskForm input,
+#editForm input {
   border: 1px solid #d8d8d8;
   border-radius: 6px;
   padding: 10px;
 }
 
-#taskForm textarea {
+#taskForm textarea,
+#editForm textarea {
   font-family: "Roboto", sans-serif;
   border: 1px solid #d8d8d8;
   border-radius: 6px;
@@ -226,21 +238,25 @@ body {
   resize: none;
 }
 
-#taskForm select {
+#taskForm select,
+#editForm select {
   border: 1px solid #d8d8d8;
   border-radius: 6px;
   padding: 10px;
 }
-#taskForm label {
+#taskForm label,
+#editForm label {
   margin-bottom: 5px;
 }
 
-#taskForm .addTask {
+#taskForm .addTask,
+#editForm .editTask {
   align-self: flex-end;
 }
 
 .addTask,
-.addProject {
+.addProject,
+.editTask {
   font-size: 15px;
   background-color: #fb8500;
   color: #ffffff;
@@ -343,6 +359,14 @@ body {
   background-color: #ffffff;
   border-radius: 6px;
 }
+
+.taskLeft,
+.taskRight {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
 .taskCardDetailsContainer {
   width: 90%;
   max-width: 900px;
@@ -360,20 +384,13 @@ body {
   gap: 15px;
 }
 
-.taskLeft,
-.taskRight {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.taskDetailsLeft {
+.taskDetailsTop {
   display: flex;
   justify-content: space-between;
   gap: 7px;
 }
 
-.taskDetailsRight {
+.taskDetailsBottom {
   display: flex;
   justify-content: space-between;
   gap: 25px;
@@ -393,5 +410,13 @@ body {
 }
 
 .closeTaskDetailsBtn:active {
+  transform: scale(0.96);
+}
+
+/* #taskEditor {
+  display: block;
+} */
+
+.editTask:active {
   transform: scale(0.96);
 }
