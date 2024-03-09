@@ -21,9 +21,9 @@
 
     <div id="sideBar">
       <div id="menu">
-        <button class="menuBtn">Today</button>
-        <button class="menuBtn">This Week</button>
-        <button class="menuBtn">All Tasks</button>
+        <button id="allTasksBtn" class="menuBtn">All Tasks</button>
+        <button id="todayBtn" class="menuBtn">Today</button>
+        <button id="thisWeekBtn" class="menuBtn">This Week</button>
       </div>
 
       <div id="projects">
@@ -35,7 +35,10 @@
     </div>
 
     <div id="content">
-      <div class="pageTitle"></div>
+      <div id="pageTitle">All Tasks</div>
+      <div id="allTasksDisplay"></div>
+      <div id="todayDisplay"></div>
+      <div id="thisWeekDisplay"></div>
     </div>
 
     <div id="taskCreator">
@@ -56,7 +59,7 @@
 
         <div class="date">
           <label for="date">Date:</label>
-          <input type="date" name="date" id="date" required />
+          <input type="datetime-local" name="date" id="date" required />
         </div>
 
         <div class="priority">
@@ -102,7 +105,12 @@
 
         <div class="editDate">
           <label for="edit_date">Date:</label>
-          <input type="date" name="edit_date" id="edit_date" required />
+          <input
+            type="datetime-local"
+            name="edit_date"
+            id="edit_date"
+            required
+          />
         </div>
 
         <div class="editPriority">
