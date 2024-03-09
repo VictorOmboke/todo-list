@@ -1,11 +1,18 @@
 import handleTodoLogic from "./todo-logic.js";
+import { parseISO, isToday, startOfWeek, endOfWeek, format } from "date-fns";
 
 function handleDomManipulation() {
   const tasks = [];
 
   let taskCardCounter = 0;
 
-  const display = document.getElementById("content");
+  const pageTitle = document.getElementById("pageTitle");
+  const allTasksBtn = document.getElementById("allTasksBtn");
+  const allTasksDisplay = document.getElementById("allTasksDisplay");
+  const todayBtn = document.getElementById("todayBtn");
+  const todayDisplay = document.getElementById("todayDisplay");
+  const thisWeekBtn = document.getElementById("thisWeekBtn");
+  const thisWeekDisplay = document.getElementById("thisWeekDisplay");
 
   const taskCreator = document.getElementById("taskCreator");
   const taskForm = document.getElementById("taskForm");
@@ -113,41 +120,42 @@ function handleDomManipulation() {
     return taskTitle;
   }
 
-  function createTaskNote() {
-    const note = document.getElementById("add_note").value;
-    const taskNote = document.createElement("div");
-    taskNote.classList.add("taskNote");
-    taskNote.textContent = note;
+  // function createTaskNote() {
+  //   const note = document.getElementById("add_note").value;
+  //   const taskNote = document.createElement("div");
+  //   taskNote.classList.add("taskNote");
+  //   taskNote.textContent = note;
 
-    return taskNote;
-  }
+  //   return taskNote;
+  // }
 
   function createTaskDate() {
     const date = document.getElementById("date").value;
+    const formattedDate = format(new Date(date), "MMMM dd, yyyy - hh:mm a");
     const taskDate = document.createElement("div");
     taskDate.classList.add("taskDate");
-    taskDate.textContent = date;
+    taskDate.textContent = formattedDate;
 
     return taskDate;
   }
 
-  function createTaskPriority() {
-    const priority = document.getElementById("priority").value;
-    const taskPriority = document.createElement("div");
-    taskPriority.classList.add("taskPriority");
-    taskPriority.textContent = priority;
+  // function createTaskPriority() {
+  //   const priority = document.getElementById("priority").value;
+  //   const taskPriority = document.createElement("div");
+  //   taskPriority.classList.add("taskPriority");
+  //   taskPriority.textContent = priority;
 
-    return taskPriority;
-  }
+  //   return taskPriority;
+  // }
 
-  function createTaskProject() {
-    const project = document.getElementById("project").value;
-    const taskProject = document.createElement("div");
-    taskProject.classList.add("taskProject");
-    taskProject.textContent = project;
+  // function createTaskProject() {
+  //   const project = document.getElementById("project").value;
+  //   const taskProject = document.createElement("div");
+  //   taskProject.classList.add("taskProject");
+  //   taskProject.textContent = project;
 
-    return taskProject;
-  }
+  //   return taskProject;
+  // }
 
   function createEditIcon() {
     const editIcon = document.createElement("img");
@@ -247,8 +255,9 @@ function handleDomManipulation() {
     noteDetails.textContent = `Note: ${note}`;
 
     const dateDetails = document.createElement("div");
+    const formattedDate = format(new Date(date), "MMMM dd, yyyy - hh:mm a");
     dateDetails.classList.add("dateDetails");
-    dateDetails.textContent = `Date: ${date}`;
+    dateDetails.textContent = `Date: ${formattedDate}`;
 
     const priorityDetails = document.createElement("div");
     priorityDetails.classList.add("priorityDetails");
@@ -306,7 +315,6 @@ function handleDomManipulation() {
 
     deleteIcons.forEach((deleteIcon) => {
       deleteIcon.addEventListener("click", (event) => {
-        const display = document.getElementById("content");
         const taskCard = event.target.closest(".taskCard");
         const taskCardDetailsContainer =
           event.target.closest(".taskCard").nextElementSibling;
@@ -321,8 +329,8 @@ function handleDomManipulation() {
             tasks.splice(taskIndex, 1);
           }
 
-          display.removeChild(taskCard);
-          display.removeChild(taskCardDetailsContainer);
+          allTasksDisplay.removeChild(taskCard);
+          allTasksDisplay.removeChild(taskCardDetailsContainer);
 
           console.log(tasks);
           console.log("This task was deleted");
@@ -424,6 +432,33 @@ function handleDomManipulation() {
     });
   }
 
+  function allTasksDisplayControl() {
+    allTasksBtn.addEventListener("click", () => {
+      allTasksDisplay.style.display = "block";
+      todayDisplay.style.display = "none";
+      thisWeekDisplay.style.display = "none";
+      pageTitle.textContent = "All Tasks";
+    });
+  }
+
+  function todayTasksDisplayControl() {
+    todayBtn.addEventListener("click", () => {
+      todayDisplay.style.display = "block";
+      allTasksDisplay.style.display = "none";
+      thisWeekDisplay.style.display = "none";
+      pageTitle.textContent = "Today";
+    });
+  }
+
+  function thisWeekDIsplayControl() {
+    thisWeekBtn.addEventListener("click", () => {
+      thisWeekDisplay.style.display = "block";
+      allTasksDisplay.style.display = "none";
+      todayDisplay.style.display = "none";
+      pageTitle.textContent = "This Week";
+    });
+  }
+
   function displayTask() {
     taskForm.addEventListener("submit", (event) => {
       event.preventDefault();
@@ -434,6 +469,11 @@ function handleDomManipulation() {
       const date = document.getElementById("date").value;
       const priority = document.getElementById("priority").value;
       const project = document.getElementById("project").value;
+
+      const taskDate = new Date(date);
+      const today = new Date();
+      const startOfWeekDate = startOfWeek(today);
+      const endOfWeekDate = endOfWeek(today);
 
       let newTask = handleTodoLogic().taskFactory(
         id,
@@ -447,10 +487,20 @@ function handleDomManipulation() {
       tasks.push(newTask);
       console.log(tasks);
 
-      display.appendChild(createTaskCard(newTask));
-      display.appendChild(createTaskDetailsCard(newTask));
+      console.log(taskDate);
+      console.log(startOfWeekDate);
+      console.log(endOfWeekDate);
 
-      // taskForm.reset();
+      if (isToday(taskDate)) {
+        todayDisplay.appendChild(createTaskCard(newTask));
+        todayDisplay.appendChild(createTaskDetailsCard(newTask));
+      } else if (taskDate >= startOfWeekDate && taskDate <= endOfWeekDate) {
+        thisWeekDisplay.appendChild(createTaskCard(newTask));
+        thisWeekDisplay.appendChild(createTaskDetailsCard(newTask));
+      }
+
+      allTasksDisplay.appendChild(createTaskCard(newTask));
+      allTasksDisplay.appendChild(createTaskDetailsCard(newTask));
 
       openTaskDetails();
       closeTaskDetails();
@@ -470,6 +520,9 @@ function handleDomManipulation() {
     launchProjectCreator,
     closeProjectCreator,
     displayTask,
+    allTasksDisplayControl,
+    todayTasksDisplayControl,
+    thisWeekDIsplayControl,
   };
 }
 
