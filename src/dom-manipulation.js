@@ -312,28 +312,39 @@ function handleDomManipulation() {
 
   function deleteTask() {
     const deleteIcons = document.querySelectorAll(".deleteIcon");
+    const allDisplays = [allTasksDisplay, todayDisplay, thisWeekDisplay];
 
     deleteIcons.forEach((deleteIcon) => {
-      deleteIcon.addEventListener("click", (event) => {
-        const taskCard = event.target.closest(".taskCard");
-        const taskCardDetailsContainer =
-          event.target.closest(".taskCard").nextElementSibling;
-
-        if (taskCard && taskCardDetailsContainer) {
-          const taskId = taskCard.dataset.taskId;
-          const taskIndex = tasks.findIndex(
-            (newTask) => newTask.id === parseInt(taskId)
+      deleteIcon.addEventListener("click", () => {
+        let taskId;
+        allDisplays.forEach((display) => {
+          taskId = deleteIcon.closest(".taskCard").dataset.taskId;
+          const taskCard = display.querySelector(
+            `.taskCard[data-task-id='${taskId}']`
+          );
+          const taskCardDetailsContainer = display.querySelector(
+            `.taskCardDetailsContainer[data-task-id="${taskId}"]`
           );
 
-          if (taskIndex !== -1) {
-            tasks.splice(taskIndex, 1);
+          if (taskCard) {
+            display.removeChild(taskCard);
           }
+          if (taskCardDetailsContainer) {
+            display.removeChild(taskCardDetailsContainer);
+          }
+        });
 
-          allTasksDisplay.removeChild(taskCard);
-          allTasksDisplay.removeChild(taskCardDetailsContainer);
+        const taskIndex = tasks.findIndex(
+          (task) => task.id === parseInt(taskId)
+        );
 
-          console.log(tasks);
+        if (taskIndex !== -1) {
+          tasks.splice(taskIndex, 1);
           console.log("This task was deleted");
+          console.log(tasks);
+        } else {
+          console.log("Task was not found");
+          console.log(tasks);
         }
       });
     });
