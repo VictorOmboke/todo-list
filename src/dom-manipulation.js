@@ -342,9 +342,6 @@ function handleDomManipulation() {
           tasks.splice(taskIndex, 1);
           console.log("This task was deleted");
           console.log(tasks);
-        } else {
-          console.log("Task was not found");
-          console.log(tasks);
         }
       });
     });
@@ -372,19 +369,23 @@ function handleDomManipulation() {
     }
   }
 
-  function updateTaskCard(taskId, newTaskData) {
-    const taskCard = document.querySelector(
+  function updateTaskCard(taskId, newTaskData, display) {
+    const taskCard = display.querySelector(
       `.taskCard[data-task-id="${taskId}"]`
     );
 
     if (taskCard) {
       taskCard.querySelector(".taskTitle").textContent = newTaskData.title;
-      taskCard.querySelector(".taskDate").textContent = newTaskData.date;
+      const formattedDate = format(
+        new Date(newTaskData.date),
+        "MMMM dd, yyyy - hh:mm a"
+      );
+      taskCard.querySelector(".taskDate").textContent = formattedDate;
     }
   }
 
-  function updateTaskDetailsCard(taskId, newTaskData) {
-    const taskCardDetailsContainer = document.querySelector(
+  function updateTaskDetailsCard(taskId, newTaskData, display) {
+    const taskCardDetailsContainer = display.querySelector(
       `.taskCardDetailsContainer[data-task-id="${taskId}"]`
     );
 
@@ -392,15 +393,23 @@ function handleDomManipulation() {
       taskCardDetailsContainer.querySelector(
         ".taskDetailsTop .titleDetails"
       ).textContent = `Title: ${newTaskData.title}`;
+
+      const formattedDate = format(
+        new Date(newTaskData.date),
+        "MMMM dd, yyyy - hh:mm a"
+      );
       taskCardDetailsContainer.querySelector(
         ".taskDetailsTop .dateDetails"
-      ).textContent = `Date: ${newTaskData.date}`;
+      ).textContent = `Date: ${formattedDate}`;
+
       taskCardDetailsContainer.querySelector(
         ".taskDetailsTop .priorityDetails"
       ).textContent = `Priority: ${newTaskData.priority}`;
+
       taskCardDetailsContainer.querySelector(
         ".taskDetailsBottom .noteDetails"
       ).textContent = `Note: ${newTaskData.note}`;
+
       taskCardDetailsContainer.querySelector(
         ".taskDetailsBottom .projectDetails"
       ).textContent = `Project: ${newTaskData.project}`;
@@ -432,8 +441,10 @@ function handleDomManipulation() {
         taskToUpdate.priority = editPriority.value;
         taskToUpdate.project = editProject.value;
 
-        updateTaskCard(taskId, taskToUpdate);
-        updateTaskDetailsCard(taskId, taskToUpdate);
+        [allTasksDisplay, todayDisplay, thisWeekDisplay].forEach((display) => {
+          updateTaskCard(taskId, taskToUpdate, display);
+          updateTaskDetailsCard(taskId, taskToUpdate, display);
+        });
 
         console.log(tasks);
         taskEditor.style.display = "none";
@@ -497,10 +508,6 @@ function handleDomManipulation() {
 
       tasks.push(newTask);
       console.log(tasks);
-
-      console.log(taskDate);
-      console.log(startOfWeekDate);
-      console.log(endOfWeekDate);
 
       if (isToday(taskDate)) {
         todayDisplay.appendChild(createTaskCard(newTask));
