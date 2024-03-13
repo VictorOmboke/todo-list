@@ -1,5 +1,11 @@
 import handleTodoLogic from "./todo-logic.js";
-import { parseISO, isToday, startOfWeek, endOfWeek, format } from "date-fns";
+import {
+  isToday,
+  startOfWeek,
+  endOfWeek,
+  format,
+  isWithinInterval,
+} from "date-fns";
 
 function handleDomManipulation() {
   const tasks = [];
@@ -8,11 +14,15 @@ function handleDomManipulation() {
 
   const pageTitle = document.getElementById("pageTitle");
   const allTasksBtn = document.getElementById("allTasksBtn");
+  const allTasksDisplayContainer = document.querySelector(
+    ".allTasksDisplayContainer"
+  );
   const allTasksDisplay = document.getElementById("allTasksDisplay");
   const todayBtn = document.getElementById("todayBtn");
+  const todayDisplayContainer = document.querySelector(
+    ".todayDisplayContainer"
+  );
   const todayDisplay = document.getElementById("todayDisplay");
-  const thisWeekBtn = document.getElementById("thisWeekBtn");
-  const thisWeekDisplay = document.getElementById("thisWeekDisplay");
 
   const taskCreator = document.getElementById("taskCreator");
   const taskForm = document.getElementById("taskForm");
@@ -192,10 +202,6 @@ function handleDomManipulation() {
     taskCard.dataset.taskId = newTask.id;
     taskCard.setAttribute("data-cardCounter", `card ${taskCardCounter}`);
 
-    const taskCheckbox = document.createElement("input");
-    taskCheckbox.classList.add("taskCheckBox");
-    taskCheckbox.setAttribute("type", "checkbox");
-
     const iconContainer = document.createElement("div");
     iconContainer.setAttribute("id", "iconContainer");
 
@@ -209,7 +215,6 @@ function handleDomManipulation() {
     iconContainer.appendChild(createInfoIcon());
     iconContainer.appendChild(createDeleteIcon());
 
-    taskLeft.appendChild(taskCheckbox);
     taskLeft.appendChild(createTaskTitle());
 
     taskRight.appendChild(createTaskDate());
@@ -435,49 +440,66 @@ function handleDomManipulation() {
       );
 
       if (taskToUpdate) {
+        const originalDate = taskToUpdate.date;
+
         taskToUpdate.title = editTitle.value;
         taskToUpdate.note = editNote.value;
         taskToUpdate.date = editDate.value;
         taskToUpdate.priority = editPriority.value;
         taskToUpdate.project = editProject.value;
 
-        [allTasksDisplay, todayDisplay, thisWeekDisplay].forEach((display) => {
+        [allTasksDisplay, todayDisplay].forEach((display) => {
           updateTaskCard(taskId, taskToUpdate, display);
           updateTaskDetailsCard(taskId, taskToUpdate, display);
         });
 
         console.log(tasks);
         taskEditor.style.display = "none";
-      } else {
-        console.error("Task not found");
+
+        const editedTaskDate = new Date(taskToUpdate.date);
+        const today = new Date();
+
+        if (isToday(editedTaskDate) && !isToday(new Date(originalDate))) {
+          removeTaskFromDisplay(taskId, allTasksDisplay);
+        } else if (
+          !isToday(editedTaskDate) &&
+          isToday(new Date(originalDate))
+        ) {
+          removeTaskFromDisplay(taskId, todayDisplay);
+        }
       }
     });
   }
 
+  function removeTaskFromDisplay(taskId, display) {
+    const taskCard = display.querySelector(
+      `.taskCard[data-task-id="${taskId}"]`
+    );
+    const taskCardDetailsContainer = display.querySelector(
+      `.taskCardDetailsContainer[data-task-id="${taskId}"]`
+    );
+
+    if (taskCard) {
+      display.removeChild(taskCard);
+    }
+    if (taskCardDetailsContainer) {
+      display.removeChild(taskCardDetailsContainer);
+    }
+  }
+
   function allTasksDisplayControl() {
     allTasksBtn.addEventListener("click", () => {
-      allTasksDisplay.style.display = "block";
-      todayDisplay.style.display = "none";
-      thisWeekDisplay.style.display = "none";
+      allTasksDisplayContainer.style.display = "block";
+      todayDisplayContainer.style.display = "none";
       pageTitle.textContent = "All Tasks";
     });
   }
 
   function todayTasksDisplayControl() {
     todayBtn.addEventListener("click", () => {
-      todayDisplay.style.display = "block";
-      allTasksDisplay.style.display = "none";
-      thisWeekDisplay.style.display = "none";
+      todayDisplayContainer.style.display = "block";
+      allTasksDisplayContainer.style.display = "none";
       pageTitle.textContent = "Today";
-    });
-  }
-
-  function thisWeekDIsplayControl() {
-    thisWeekBtn.addEventListener("click", () => {
-      thisWeekDisplay.style.display = "block";
-      allTasksDisplay.style.display = "none";
-      todayDisplay.style.display = "none";
-      pageTitle.textContent = "This Week";
     });
   }
 
@@ -512,9 +534,6 @@ function handleDomManipulation() {
       if (isToday(taskDate)) {
         todayDisplay.appendChild(createTaskCard(newTask));
         todayDisplay.appendChild(createTaskDetailsCard(newTask));
-      } else if (taskDate >= startOfWeekDate && taskDate <= endOfWeekDate) {
-        thisWeekDisplay.appendChild(createTaskCard(newTask));
-        thisWeekDisplay.appendChild(createTaskDetailsCard(newTask));
       }
 
       allTasksDisplay.appendChild(createTaskCard(newTask));
@@ -540,7 +559,6 @@ function handleDomManipulation() {
     displayTask,
     allTasksDisplayControl,
     todayTasksDisplayControl,
-    thisWeekDIsplayControl,
   };
 }
 
