@@ -124,7 +124,7 @@ body {
   color: #ffffff;
 }
 
-#projectDisplay {
+#projectMenu {
   display: flex;
   flex-direction: column;
   gap: 5px;
@@ -369,11 +369,16 @@ body {
   gap: 8px;
 }
 
-#thisWeekDisplay {
+#projectDisplay {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 8px;
+}
+
+.projectDisplayContainer {
+  width: 100%;
+  display: none;
 }
 
 .allTasksDisplayContainer {
@@ -386,20 +391,19 @@ body {
   width: 100%;
 }
 
-.thisWeekDisplayContainer {
-  display: none;
-  width: 100%;
-}
-
-.taskCard {
+.taskCardContainer {
   width: 90%;
   max-width: 900px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
   padding: 10px 15px;
   background-color: #ffffff;
   border-radius: 6px;
+  position: relative;
+}
+
+.taskCard {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .taskLeft,
