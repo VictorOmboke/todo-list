@@ -6,7 +6,7 @@ import handleDom from "./dom.js";
 import { isToday, format } from "date-fns";
 
 function handleTask() {
-  const tasks = [];
+  let tasks = [];
 
   let currentEditingTaskId;
 
@@ -40,6 +40,7 @@ function handleTask() {
   const taskEditorCloseBtn = document.querySelector(".editClose");
   const taskLauncher = document.querySelector(".taskLauncher");
 
+  //display functions
   function allTasksDisplayControl() {
     allTasksBtn.addEventListener("click", () => {
       allTasksDisplayContainer.style.display = "block";
