@@ -1,15 +1,38 @@
-import handleDomManipulation from "./dom-manipulation.js";
-import handleTodoLogic from "./todo-logic.js";
+// import handleFactory from "./factory.js";
+// import handleProject from "./project.js";
+// import handleEdit from "./edit.js";
+// import handleDelete from "./delete.js";
+// import handleInfo from "./info.js";
+import handleDom from "./dom.js";
+import handleTask from "./task.js";
 
-const domManipulation = handleDomManipulation();
-const todoLogic = handleTodoLogic();
+function runTodo() {
+  const task = handleTask();
+  const dom = handleDom();
+  //   const info = handleInfo();
+  //   const taskDelete = handleDelete();
+  //   const edit = handleEdit();
+  //   const project = handleProject();
+  //   const factory = handleFactory();
 
-domManipulation.launchProjectCreator();
-domManipulation.launchTaskCreator();
-domManipulation.closeProjectCreator();
-domManipulation.closeTaskCreator();
-domManipulation.displayTask();
-domManipulation.allTasksDisplayControl();
-domManipulation.todayTasksDisplayControl();
+  task.displayTask();
+  task.createProject();
+  task.allTasksDisplayControl();
+  task.todayTasksDisplayControl();
+  dom.launchTaskCreator();
+  dom.closeTaskCreator();
+  dom.launchProjectCreator();
+  dom.closeProjectCreator();
+  //   project.createProject();
+}
 
-todoLogic.createProject();
+runTodo();
+
+// domManipulation.launchProjectCreator();
+// domManipulation.launchTaskCreator();
+// domManipulation.closeProjectCreator();
+// domManipulation.closeTaskCreator();
+// domManipulation.displayTask();
+// domManipulation.allTasksDisplayControl();
+// domManipulation.todayTasksDisplayControl();
+// domManipulation.createProject();
