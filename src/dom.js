@@ -77,7 +77,7 @@ function handleDom() {
   function createEditIcon() {
     const editIcon = document.createElement("img");
     editIcon.classList.add("editIcon");
-    editIcon.src = "../dist/icons/edit.svg";
+    editIcon.src = "./icons/edit.svg";
     editIcon.alt = "Edit icon";
 
     return editIcon;
@@ -86,7 +86,7 @@ function handleDom() {
   function createInfoIcon() {
     const infoIcon = document.createElement("img");
     infoIcon.classList.add("infoIcon");
-    infoIcon.src = "../dist/icons/info.svg";
+    infoIcon.src = "./icons/info.svg";
     infoIcon.alt = "Information icon";
 
     return infoIcon;
@@ -95,7 +95,7 @@ function handleDom() {
   function createDeleteIcon() {
     const deleteIcon = document.createElement("img");
     deleteIcon.classList.add("deleteIcon");
-    deleteIcon.src = "../dist/icons/delete.svg";
+    deleteIcon.src = "./icons/delete.svg";
     deleteIcon.alt = "Delete Icon";
 
     return deleteIcon;
