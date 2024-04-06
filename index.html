@@ -28,7 +28,7 @@
       <div id="projects">
         <h2>Projects</h2>
 
-        <div id="projectDisplay"></div>
+        <div id="projectMenu"></div>
         <button class="createProjectBtn">&#43; New Project</button>
       </div>
     </div>
@@ -41,8 +41,8 @@
       <div class="todayDisplayContainer">
         <div id="todayDisplay"></div>
       </div>
-      <div class="thisWeekDisplayContainer">
-        <div id="thisWeekDisplay"></div>
+      <div class="projectDisplayContainer">
+        <div id="projectDisplay"></div>
       </div>
     </div>
 
@@ -79,7 +79,7 @@
         <div class="project">
           <label for="project">Project:</label>
           <select name="project" id="project">
-            <option value="All Tasks">All Tasks</option>
+            <option value="None">None</option>
           </select>
         </div>
 
@@ -127,12 +127,12 @@
           </select>
         </div>
 
-        <div class="editProject">
+        <!-- <div class="editProject">
           <label for="edit_project">Project:</label>
           <select name="edit_project" id="edit_project">
-            <option value="All Tasks">All Tasks</option>
+            <option value="None">None</option>
           </select>
-        </div>
+        </div> -->
 
         <button type="submit" class="editTask">Edit Task</button>
       </form>
